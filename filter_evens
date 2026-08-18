@@ -1,0 +1,10 @@
+def filter_evens(numbers):
+    new_list = []
+    for number in numbers:
+        if number % 2 == 0:
+            new_list.append(number)
+    return new_list
+
+numbers = [1,2,4,5,67,88,4,33,42,41]
+even_list = filter_evens(numbers)
+print(even_list)
