@@ -1,0 +1,10 @@
+
+def max_number(l):
+    max = l[0]
+    for item in l[1:]:
+        if item > max:
+            max = item
+    return max
+        
+numbers = [20,55,43,2,44,877,554,33,4]
+print(max_number(numbers))
