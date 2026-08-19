@@ -1,0 +1,10 @@
+def find_palindromes(word_list):
+    palindromes = []
+    for word in word_list:
+        if word == word[::-1]:
+            palindromes.append(word)
+    return palindromes
+
+word_list = ["racecar", "hello", "level", "world", "madam"]
+palindrome_list = find_palindromes(word_list)
+print(palindrome_list)  
