@@ -1,0 +1,7 @@
+def find_longest_word(list):
+    longest = ""
+    for word in list:
+        if len(word) > len(longest):
+            longest = word
+    return longest
+
