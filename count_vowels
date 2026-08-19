@@ -1,0 +1,10 @@
+def count_vowels(str):
+    count = 0
+    for char in str:
+        if char == 'a' or char == 'e' or char == 'i' or char == 'o' or char == 'u':
+            count += 1
+    return count
+
+str = "Hello, World!"
+vowel_count = count_vowels(str)
+print(vowel_count)
