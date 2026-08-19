@@ -1,0 +1,9 @@
+def reverse_text(str):
+    reversed_str = ""
+    for item in str:
+        reversed_str = item + reversed_str
+    return reversed_str
+
+str = "Hello, World!"
+reversed_str = reverse_text(str)
+print(reversed_str)
