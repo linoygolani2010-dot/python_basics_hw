@@ -1,0 +1,6 @@
+def get_value(dic,key):
+    if key in dic:
+        return dic[key]
+    else:
+        print(f"key {key} not found in the dictionary")
+
