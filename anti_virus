@@ -1,0 +1,10 @@
+# x = 7066557e2395f7bed46670448848425a6c14c107f988d9500374d4d70b770145
+
+from pathlib import Path
+def print_folders(start_path):
+    for item in start_path.iterdir():
+        if item.is_file():
+            print(item.name)
+        elif item.is_dir():
+            print_folders(item)
+
