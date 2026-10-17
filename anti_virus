@@ -1,10 +1,39 @@
-# x = 7066557e2395f7bed46670448848425a6c14c107f988d9500374d4d70b770145
-
 from pathlib import Path
-def print_folders(start_path):
-    for item in start_path.iterdir():
-        if item.is_file():
-            print(item.name)
+import requests
+import time
+
+virus_total_api_scan_file_url = "https://virustotal.com"
+virus_total_api_key = "7066557e2395f7bed46670448848425a6c14c107f988d9500374d4d70b770145"
+
+def scan_file(file_path):
+    print(f"Scanning file: {file_path}")
+    analysis_id = upload_file_for_scan(file_path)
+    print(f"File uploaded for scanning. Analysis ID: {analysis_id}")
+    
+    scan_result = requests.get(f"{virus_total_api_scan_file_url}/{analysis_id}", headers={'x-apikey': virus_total_api_key})
+    result_json = scan_result.json()
+    while result_json['data']['attributes']['status'] != "completed":
+        print("Waiting for scan results...")
+        time.sleep(2)
+        scan_result = requests.get(f"{virus_total_api_scan_file_url}/{analysis_id}", headers={'x-apikey': virus_total_api_key})
+        result_json = scan_result.json()
+        
+
+def upload_file_for_scan(file_path):
+    response = requests.post(
+        url=virus_total_api_scan_file_url, 
+        headers={'x-apikey': virus_total_api_key}, 
+        files={'file': open(file_path, 'rb')}
+    )
+    response = response.json()
+    return response['data']['id'] 
+
+
+def iterate_directory_contents(directory_path):
+    directory_path = Path(directory_path)
+    for item in directory_path.iterdir():
+        if item.is_file():        
+            scan_file(item)
         elif item.is_dir():
-            print_folders(item)
+            iterate_directory_contents(item)
 
