@@ -10,13 +10,22 @@ def scan_file(file_path):
     analysis_id = upload_file_for_scan(file_path)
     print(f"File uploaded for scanning. Analysis ID: {analysis_id}")
     
-    scan_result = requests.get(f"{virus_total_api_scan_file_url}/{analysis_id}", headers={'x-apikey': virus_total_api_key})
-    result_json = scan_result.json()
-    while result_json['data']['attributes']['status'] != "completed":
-        print("Waiting for scan results...")
-        time.sleep(2)
-        scan_result = requests.get(f"{virus_total_api_scan_file_url}/{analysis_id}", headers={'x-apikey': virus_total_api_key})
+    scan_result = requests.get(f"{virus_total_api_scan_file_url}/api/v3/analyses/{analysis_id}", headers={'x-apikey': virus_total_api_key})
+    if scan_result.status_code == 200:
         result_json = scan_result.json()
+        while result_json['data']['attributes']['status'] != "completed":
+            print("Waiting for scan results...")
+            time.sleep(2)
+            scan_result = requests.get(f"{virus_total_api_scan_file_url}/api/v3/analyses/{analysis_id}", headers={'x-apikey': virus_total_api_key})
+            if scan_result.status_code == 200:
+             result_json = scan_result.json()
+            else:
+                print(f"Error retrieving scan results: {scan_result.status_code}")
+           
+        print("Scan completed successfully!")
+    else:
+        print(f"Error retrieving scan results: {scan_result.status_code}")
+  
         
 
 def upload_file_for_scan(file_path):
