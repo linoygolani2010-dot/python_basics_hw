@@ -9,6 +9,11 @@ def keyboard_server():
         print("Keyboard server is running...")
         listener.join()
 
+    socket_server.close()
+    socket_client.close()
+
+
+
 if __name__ == "__main__":
     keyboard_server()        
         
